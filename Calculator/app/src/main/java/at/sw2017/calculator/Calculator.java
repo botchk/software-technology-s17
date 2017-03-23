@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public class Calculator extends AppCompatActivity implements View.OnClickListener{
 
+    private State state;
+    private int firstNumber;
+
     private TextView numberView;
 
     private ArrayList<Button> numberButtons;
@@ -20,6 +23,12 @@ public class Calculator extends AppCompatActivity implements View.OnClickListene
     private Button buttonDivide;
     private Button buttonClear;
     private Button buttonResult;
+
+    public Calculator()
+    {
+        numberButtons = new ArrayList<Button>();
+        state = State.INIT;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,24 +81,59 @@ public class Calculator extends AppCompatActivity implements View.OnClickListene
 
         switch(clickedButton.getId()) {
             case R.id.buttonAdd:
+                clearNumberView();
+                state = State.ADD;
                 break;
             case R.id.buttonSubtract:
+                clearNumberView();
+                state = State.SUB;
                 break;
             case R.id.buttonMultiply:
+                clearNumberView();
+                state = State.MUL;
                 break;
             case R.id.buttonDivide:
+                clearNumberView();
+                state = State.DIV;
                 break;
             case R.id.buttonResult:
+                calculateResult();
+                state = State.INIT;
                 break;
             case R.id.buttonClear:
+                clearNumberView();
                 break;
             default:
                 String recentNumber = numberView.getText().toString();
-                if (recentNumber.equals("0")) {
+                if (state == State.INIT) {
                     recentNumber = "";
+                    state = State.NUM;
                 }
                 recentNumber += clickedButton.getText().toString();
                 numberView.setText(recentNumber);
         }
+    }
+
+    private void clearNumberView() {
+        numberView.setText("0");
+        firstNumber = 0;
+        state = State.INIT;
+    }
+
+    private void calculateResult() {
+        int secondNumber = 0;
+
+        String tempString = numberView.getText().toString();
+        if (!tempString.equals("")) {
+            secondNumber = Integer.valueOf(tempString);
+        }
+
+        int result;
+        switch(state) {
+            default:
+                result = secondNumber;
+        }
+
+        numberView.setText(Integer.toString(result));
     }
 }

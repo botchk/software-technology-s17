@@ -7,7 +7,7 @@
     tools:context="at.sw2017.calculator.Calculator">
 
     <Button
-        android:id="@+id/buttonSeven"
+        android:id="@+id/button7"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="7"
@@ -25,7 +25,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonEight"
+        android:id="@+id/button8"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="8"
@@ -43,7 +43,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonNine"
+        android:id="@+id/button9"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="9"
@@ -79,7 +79,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonFour"
+        android:id="@+id/button4"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="4"
@@ -97,7 +97,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonFive"
+        android:id="@+id/button5"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="5"
@@ -115,7 +115,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonSix"
+        android:id="@+id/button6"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="6"
@@ -151,7 +151,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonOne"
+        android:id="@+id/button1"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="1"
@@ -169,7 +169,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonTwo"
+        android:id="@+id/button2"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="2"
@@ -187,7 +187,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonThree"
+        android:id="@+id/button3"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="3"
@@ -241,7 +241,7 @@
         android:layout_marginEnd="8dp" />
 
     <Button
-        android:id="@+id/buttonZero"
+        android:id="@+id/button0"
         android:layout_width="88dp"
         android:layout_height="80dp"
         android:text="0"
@@ -298,14 +298,13 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:text="TextView"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
