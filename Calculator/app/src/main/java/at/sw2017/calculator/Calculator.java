@@ -130,6 +130,18 @@ public class Calculator extends AppCompatActivity implements View.OnClickListene
 
         int result;
         switch(state) {
+            case ADD:
+                result = Calculations.doAddition(firstNumber, secondNumber);
+                break;
+            case SUB:
+                result = Calculations.doSubtraction(firstNumber, secondNumber);
+                break;
+            case MUL:
+                result = Calculations.doMultiplication(firstNumber, secondNumber);
+                break;
+            case DIV:
+                result = Calculations.doDivision(firstNumber, secondNumber);
+                break;
             default:
                 result = secondNumber;
         }
