@@ -101,7 +101,7 @@ public class Calculator extends AppCompatActivity implements View.OnClickListene
                 state = State.INIT;
                 break;
             case R.id.buttonClear:
-                clearNumberView();
+                clearTextView();
                 break;
             default:
                 String recentNumber = numberView.getText().toString();
@@ -115,6 +115,14 @@ public class Calculator extends AppCompatActivity implements View.OnClickListene
     }
 
     private void clearNumberView() {
+        String tempString = numberView.getText().toString();
+        if(!tempString.equals("")){
+            firstNumber = Integer.valueOf(tempString);
+        }
+        numberView.setText("");
+    }
+
+    private void clearTextView() {
         numberView.setText("0");
         firstNumber = 0;
         state = State.INIT;

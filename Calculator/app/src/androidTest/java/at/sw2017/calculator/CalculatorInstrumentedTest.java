@@ -66,4 +66,74 @@ public class CalculatorInstrumentedTest {
 
         onView(withId(R.id.textView)).check(matches(withText("0")));
     }
+
+    @Test
+    public void testPlusCalculation() {
+        onView(withText("3")).perform(click());
+        onView(withText("+")).perform(click());
+        onView(withText("4")).perform(click());
+        onView(withText("=")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("7")));
+    }
+
+    @Test
+    public void testMinusCalculation() {
+        onView(withText("4")).perform(click());
+        onView(withText("-")).perform(click());
+        onView(withText("3")).perform(click());
+        onView(withText("=")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("1")));
+    }
+
+    @Test
+    public void testMulCalculation() {
+        onView(withText("3")).perform(click());
+        onView(withText("*")).perform(click());
+        onView(withText("4")).perform(click());
+        onView(withText("=")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("12")));
+    }
+
+    @Test
+    public void testDivCalculation() {
+        onView(withText("9")).perform(click());
+        onView(withText("/")).perform(click());
+        onView(withText("3")).perform(click());
+        onView(withText("=")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("3")));
+    }
+
+
+
+    @Test
+    public void testDoubletapOperator() {
+        onView(withText("4")).perform(click());
+        onView(withText("*")).perform(click());
+        onView(withText("*")).perform(click());
+        onView(withText("2")).perform(click());
+        onView(withText("=")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("8")));
+    }
+
+    @Test
+    public void testNoSecondNumber() {
+        onView(withText("3")).perform(click());
+        onView(withText("*")).perform(click());
+        onView(withText("=")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("0")));
+    }
+
+    @Test
+    public void testNoCalculation() {
+        onView(withText("3")).perform(click());
+        onView(withText("=")).perform(click());
+
+        onView(withId(R.id.textView)).check(matches(withText("3")));
+    }
 }
