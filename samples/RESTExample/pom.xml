@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- groupId name convention com.companyname.project -->
-    <groupId>com.bugconsult.restexample</groupId>
+    <groupId>at.bugconsult.restexample</groupId>
 
     <!-- artifactId names the jar/war that gets build -->
     <artifactId>RESTExample</artifactId>
@@ -15,6 +15,12 @@
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
             <version>2.2</version>
         </dependency>
     </dependencies>

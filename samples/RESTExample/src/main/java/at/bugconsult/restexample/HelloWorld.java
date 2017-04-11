@@ -1,4 +1,4 @@
-package com.bugconsult.restexample;
+package at.bugconsult.restexample;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 public class HelloWorld {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Secured
     public String getMessage() {
         return "Hello world!";
     }
