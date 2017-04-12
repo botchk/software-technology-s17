@@ -1,6 +1,10 @@
 package at.bugconsult.restexample;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -9,6 +13,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.util.Calendar;
+import javax.enterprise.event.Event;
 
 /**
  * Created by Dominik on 11.04.2017.
@@ -19,6 +25,10 @@ import java.io.IOException;
 @Priority(Priorities.AUTHENTICATION)
 @Secured
 public class AuthenticationFilter implements ContainerRequestFilter{
+
+    @Inject
+    @AuthenticatedUser
+    Event<String> userAuthenticatedEvent;
 
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
 
@@ -31,10 +41,9 @@ public class AuthenticationFilter implements ContainerRequestFilter{
         }
 
         // extract the token for validation
-        String token = authorizationHeader.substring("Bearer".length()).trim();
+        String token = authorizationHeader.substring(7).trim(); // get token after Bearer
 
         try {
-
             // validate token, throws exception if invalid
             validateToken(token);
 
@@ -44,7 +53,20 @@ public class AuthenticationFilter implements ContainerRequestFilter{
     }
 
     private void validateToken(String token) throws Exception {
-        // check if token was issued by the server and if it is expired
-        // throw exception if invalid
+
+        Calendar currentDate = Calendar.getInstance();
+
+        // throws SignatureException if invalid
+        Claims claims = Jwts.parser()
+                .requireIssuer("bugconsult")
+                .setSigningKey("secret")
+                .parseClaimsJws(token)
+                .getBody();
+
+        if (claims.getExpiration().after(currentDate.getTime()))
+            throw new Exception();
+
+        // if token is valid fire the userAuthenticatedEvent to set the user
+        userAuthenticatedEvent.fire(claims.getSubject());
     }
 }

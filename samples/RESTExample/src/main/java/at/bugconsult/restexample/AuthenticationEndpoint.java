@@ -1,13 +1,19 @@
 package at.bugconsult.restexample;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Calendar;
 
 /**
  * Created by Dominik on 11.04.2017.
  */
-@Path("/authentication")
+@Path("/auth")
 public class AuthenticationEndpoint {
 
     @POST
@@ -15,6 +21,7 @@ public class AuthenticationEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/register")
     public Response registerUser(UserAccount userAccount) {
+
         try {
             // register a new user
             register(userAccount.getFirstname(), userAccount.getLastname(), userAccount.getUsername(),
@@ -50,6 +57,39 @@ public class AuthenticationEndpoint {
         }
     }
 
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/token")
+    public Response refreshToken(@HeaderParam("Authorization") String token) {
+
+        try {
+            // check if token valid and refresh expiration date if valid
+            Calendar currentDate = Calendar.getInstance();
+
+            // throws SignatureException if invalid
+            Claims claims = Jwts.parser()
+                    .requireIssuer("bugconsult")
+                    .setSigningKey("secret")
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            // might allow refreshing up to a longer timeframe (7 days)
+            // now just check the expiration date
+            if (claims.getExpiration().after(currentDate.getTime()))
+                throw new Exception();
+
+            //refresh the token
+            String refreshToken = issueToken(claims.getSubject());
+
+            // return the refreshed token
+            return Response.ok(refreshToken).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
     private void register(String firstname, String lastname, String username, String email, String password) throws Exception {
         // check against database if user if data is unique
         // create new account in database
@@ -61,8 +101,22 @@ public class AuthenticationEndpoint {
     }
 
     private String issueToken(String username) {
-        // generate token for user and associate it with the user
-        // see JSON Web Token (JWT)
-        return "1234";
+
+        // 15 minutes seems to be the standard
+        // renewal must be initiated from the client and server renews tokens not older than 7 days
+        // if not done within 7 days a new authentication is necessary
+        Calendar currentDate = Calendar.getInstance();
+        Calendar expiryDate = (Calendar) currentDate.clone();
+        expiryDate.add(Calendar.MINUTE, 15);  // TODO token time should be configured
+
+        String jwt = Jwts.builder()
+                .setIssuer("bugconsult") // TODO should be configured somewhere
+                .setIssuedAt(currentDate.getTime())
+                .setSubject(username)
+                .setExpiration(expiryDate.getTime())
+                .signWith(SignatureAlgorithm.HS512, "secret") //TODO the secret key should be somewhere configured
+                .compact();
+
+        return jwt;
     }
 }
