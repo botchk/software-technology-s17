@@ -22,10 +22,10 @@
             <param-value>org.glassfish.jersey.jackson.JacksonFeature</param-value>
         </init-param>
 
-        <init-param>
+        <!--init-param>
             <param-name>javax.ws.rs.Application</param-name>
             <param-value>at.bugconsult.restexample.RestExample</param-value>
-        </init-param>
+        </init-param-->
 
         <load-on-startup>1</load-on-startup>
     </servlet>

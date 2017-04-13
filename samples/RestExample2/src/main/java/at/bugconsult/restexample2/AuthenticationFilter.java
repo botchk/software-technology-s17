@@ -1,9 +1,10 @@
-package at.bugconsult.restexample;
+package at.bugconsult.restexample2;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 import javax.annotation.Priority;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
@@ -14,7 +15,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.util.Calendar;
-import javax.enterprise.event.Event;
 
 /**
  * Created by Dominik on 11.04.2017.
@@ -26,9 +26,9 @@ import javax.enterprise.event.Event;
 @Secured
 public class AuthenticationFilter implements ContainerRequestFilter{
 
-    /*@Inject
+    @Inject
     @AuthenticatedUser
-    Event<String> userAuthenticatedEvent;*/
+    Event<String> userAuthenticatedEvent;
 
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
 
@@ -57,16 +57,17 @@ public class AuthenticationFilter implements ContainerRequestFilter{
         Calendar currentDate = Calendar.getInstance();
 
         // throws SignatureException if invalid
+        // expiration date gets checked by parser automatically
         Claims claims = Jwts.parser()
                 .requireIssuer("bugconsult")
                 .setSigningKey("secret")
                 .parseClaimsJws(token)
                 .getBody();
 
-        if (claims.getExpiration().after(currentDate.getTime()))
-            throw new Exception();
+        //if (claims.getExpiration().after(currentDate.getTime()))
+        //    throw new Exception();
 
         // if token is valid fire the userAuthenticatedEvent to set the user
-        //userAuthenticatedEvent.fire(claims.getSubject());
+        userAuthenticatedEvent.fire(claims.getSubject());
     }
 }

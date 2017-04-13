@@ -1,4 +1,4 @@
-package at.bugconsult.restexample;
+package at.bugconsult.restexample2;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -12,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 @Path("/hello")
 public class HelloWorld {
 
-    /*@Inject
+    @Inject
     @AuthenticatedUser
-    UserAccount authenticatedUser;*/
+    UserAccount authenticatedUser;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Secured
     public String getMessage() {
-        return "Hello world from"; // + authenticatedUser.getUsername();
+        return "Hello world from " + authenticatedUser.getUsername();
     }
 }
