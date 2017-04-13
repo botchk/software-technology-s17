@@ -24,6 +24,7 @@ public class AuthenticatedUserProducer {
 
         return new UserAccount() {{
             setUsername(username);
+            setRole(Role.Boss);
         }};
     }
 }

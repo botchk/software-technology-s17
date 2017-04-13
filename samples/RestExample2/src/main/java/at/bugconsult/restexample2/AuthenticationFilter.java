@@ -15,16 +15,19 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 /**
  * Created by Dominik on 11.04.2017.
  *
  * Authenticaton filter that checks all requests before handing them to the endpoints
  */
-@Provider // TODO dont know what this does but seems necessary
+@Provider
 @Priority(Priorities.AUTHENTICATION)
 @Secured
 public class AuthenticationFilter implements ContainerRequestFilter{
+
+    private static final Logger logger = Logger.getLogger(AuthenticationFilter.class.getName());
 
     @Inject
     @AuthenticatedUser

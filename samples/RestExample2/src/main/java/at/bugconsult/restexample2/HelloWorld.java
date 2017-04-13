@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
  * Created by Dominik on 10.04.2017.
  */
 @Path("/hello")
+@Secured
 public class HelloWorld {
 
     @Inject
@@ -17,9 +18,17 @@ public class HelloWorld {
     UserAccount authenticatedUser;
 
     @GET
+    @Path("/1")
     @Produces(MediaType.TEXT_PLAIN)
-    @Secured
-    public String getMessage() {
-        return "Hello world from " + authenticatedUser.getUsername();
+    public String getMessage1() {
+        return "Worker Hello world from " + authenticatedUser.getUsername();
+    }
+
+    @GET
+    @Path("/2")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Secured(Role.Boss)
+    public String getMessage2() {
+        return "Boss Hello world from " + authenticatedUser.getUsername();
     }
 }
