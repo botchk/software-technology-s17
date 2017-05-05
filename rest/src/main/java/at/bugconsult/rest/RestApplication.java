@@ -1,8 +1,9 @@
-package at.bugconsult.server;
+package at.bugconsult.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 @ApplicationPath("/*")
-public class ServerApplication extends Application {
+public class RestApplication extends Application {
+
 }
